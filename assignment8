@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21 Dice Game</title>
+    <style>
+        body {https://github.com/JordanATH/assignment8/tree/main
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .dice {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            margin: 10px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 24px;
+        }
+        #rollBtn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>21 Dice Game</h1>
+    <div id="playerDice"></div>
+    <div id="computerDice"></div>
+    <button id="rollBtn">Roll Dice</button>
+    <p id="result"></p>
+
+    <script>
+        function rollDice() {
+            return Math.floor(Math.random() * 6) + 1;
+        }
+
+        function check(dice) {
+            let score = 0;
+            for (let i = 0; i < dice.length; i++) {
+                score += dice[i];
+            }
+            return score;
+        }
+
+        document.getElementById("rollBtn").addEventListener("click", function() {
+            let playerDice = [];
+            let computerDice = [];
+            let playerScore = 0;
+            let computerScore = 0;
+
+            for (let i = 0; i < 5; i++) {
+                playerDice.push(rollDice());
+                computerDice.push(rollDice());
+            }
+
+            let playerDiceHtml = "";
+            for (let i = 0; i < playerDice.length; i++) {
+                playerDiceHtml += '<div class="dice">' + playerDice[i] + '</div>';
+            }
+            document.getElementById("playerDice").innerHTML = "<h2>Your Dice</h2>" + playerDiceHtml;
+
+            let computerDiceHtml = "";
+            for (let i = 0; i < computerDice.length; i++) {
+                computerDiceHtml += '<div class="dice">' + computerDice[i] + '</div>';
+            }
+            document.getElementById("computerDice").innerHTML = "<h2>Computer's Dice</h2>" + computerDiceHtml;
+
+            playerScore = check(playerDice);
+            computerScore = check(computerDice);
+
+            let resultMsg = "";
+            if (playerScore === 21) {
+                resultMsg = "Congratulations! You scored 21!";
+            } else if (computerScore === 21) {
+                resultMsg = "The computer scored 21! Better luck next time!";
+            } else {
+                resultMsg = "Your score: " + playerScore + "<br>Computer's score: " + computerScore;
+            }
+            document.getElementById("result").innerHTML = resultMsg;
+        });
+    </script>
+</body>
+</html>
